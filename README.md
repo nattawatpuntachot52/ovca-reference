@@ -50,6 +50,53 @@ reference rules.
 | contracts | Draft 2020-12 JSON Schema documents and synthetic samples |
 | examples | Complete pass, repair-then-pass, and disagreement event streams |
 | docs | Architecture, trust boundary, limitations, and design decisions |
+| skills/zoom-out | Installable Codex skill for evidence-grounded system maps |
+
+## Codex skill
+
+The repository includes the instruction-only [Zoom Out skill](skills/zoom-out/SKILL.md).
+It adds no executable, service, or external connection to this repository.
+
+Install it by copying `skills/zoom-out` into the `skills` directory under
+`CODEX_HOME` (normally `~/.codex/skills`). For example, from the repository
+root:
+
+~~~text
+# macOS or Linux
+codex_home="${CODEX_HOME:-$HOME/.codex}"
+skills_dir="$codex_home/skills"
+skill_dest="$skills_dir/zoom-out"
+if [ -e "$skill_dest" ] || [ -L "$skill_dest" ]; then
+  printf 'Refusing to overwrite existing path: %s\n' "$skill_dest" >&2
+else
+  mkdir -p "$skills_dir"
+  cp -R skills/zoom-out "$skill_dest"
+fi
+
+# PowerShell
+$codexHome = if ($env:CODEX_HOME) { $env:CODEX_HOME } else { Join-Path $HOME '.codex' }
+$skillsDir = Join-Path $codexHome 'skills'
+$skillDest = Join-Path $skillsDir 'zoom-out'
+if ($null -ne (Get-Item -LiteralPath $skillDest -Force -ErrorAction SilentlyContinue)) {
+  throw "Refusing to overwrite existing path: $skillDest"
+}
+New-Item -ItemType Directory -Force -Path $skillsDir | Out-Null
+Copy-Item -LiteralPath 'skills\zoom-out' -Destination $skillDest -Recurse -ErrorAction Stop
+~~~
+
+If `zoom-out` already exists, review and back up that installation before
+deliberately replacing it; these examples intentionally stop without changing
+the existing path.
+
+Invoke it explicitly with a request such as:
+
+~~~text
+Use $zoom-out to map this repository in English and return the overview in chat.
+~~~
+
+Name a destination when you want a file, for example
+`docs/system-overview.md`. The skill otherwise returns the overview in the
+conversation and does not write into the inspected project.
 
 ## Deterministic reference behavior
 
