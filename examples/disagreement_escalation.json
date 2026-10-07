@@ -1,0 +1,201 @@
+[
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-escalation",
+    "event_id": "escalation-0",
+    "sequence": 0,
+    "occurred_at": "2026-03-01T00:00:00Z",
+    "type": "intake_accepted",
+    "data": {
+      "request_ref": "request-escalation",
+      "public_summary": "Choose a display order for a small label set",
+      "authority": {
+        "contract_version": "1.0",
+        "authority_id": "authority-escalation",
+        "granted_by": "owner",
+        "objective": "Produce an evidence-bound display order",
+        "scope": ["label ordering"],
+        "constraints": ["escalate independent disagreement"]
+      },
+      "budget": {
+        "contract_version": "1.0",
+        "max_repair_attempts": 1,
+        "max_events": 16
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-escalation",
+    "event_id": "escalation-1",
+    "sequence": 1,
+    "previous_event_id": "escalation-0",
+    "occurred_at": "2026-03-01T00:01:00Z",
+    "type": "coordinator_dispatched",
+    "data": {
+      "invocation": {
+        "contract_version": "1.0",
+        "invocation_id": "invocation-escalation-1",
+        "requested_by": "coordinator",
+        "role": "engineer",
+        "objective": "Produce the requested display order",
+        "authority_ref": "authority-escalation",
+        "input_refs": ["request-escalation"],
+        "attempt": 1,
+        "requested_at": "2026-03-01T00:01:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-escalation",
+    "event_id": "escalation-2",
+    "sequence": 2,
+    "previous_event_id": "escalation-1",
+    "occurred_at": "2026-03-01T00:02:00Z",
+    "type": "engineer_returned",
+    "data": {
+      "result": {
+        "contract_version": "1.0",
+        "result_id": "result-escalation-1",
+        "invocation_ref": "invocation-escalation-1",
+        "role": "engineer",
+        "status": "succeeded",
+        "summary": "Produced a stable alphabetical display order",
+        "evidence": [
+          {
+            "contract_version": "1.0",
+            "evidence_id": "evidence-escalation-implementation",
+            "kind": "implementation",
+            "summary": "Alphabetical order was produced",
+            "source": "engineer-result",
+            "collected_at": "2026-03-01T00:02:00Z"
+          }
+        ],
+        "completed_at": "2026-03-01T00:02:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-escalation",
+    "event_id": "escalation-3",
+    "sequence": 3,
+    "previous_event_id": "escalation-2",
+    "occurred_at": "2026-03-01T00:03:00Z",
+    "type": "verification_recorded",
+    "data": {
+      "outcome": {
+        "contract_version": "1.0",
+        "verification_id": "verification-escalation-1",
+        "subject_result_ref": "result-escalation-1",
+        "status": "passed",
+        "checks": [
+          {
+            "name": "stable-order",
+            "status": "passed",
+            "summary": "Repeated inputs produced the same order"
+          }
+        ],
+        "evidence": [
+          {
+            "contract_version": "1.0",
+            "evidence_id": "evidence-escalation-verification",
+            "kind": "verification",
+            "summary": "The stability check passed",
+            "source": "reference-checks",
+            "collected_at": "2026-03-01T00:03:00Z"
+          }
+        ],
+        "completed_at": "2026-03-01T00:03:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-escalation",
+    "event_id": "escalation-4",
+    "sequence": 4,
+    "previous_event_id": "escalation-3",
+    "occurred_at": "2026-03-01T00:04:00Z",
+    "type": "reviewer_decided",
+    "data": {
+      "packet": {
+        "contract_version": "1.0",
+        "review_id": "review-escalation-1",
+        "engineer_result_ref": "result-escalation-1",
+        "verification_ref": "verification-escalation-1",
+        "decision": "pass",
+        "findings": [],
+        "evidence_refs": ["evidence-escalation-verification"],
+        "completed_at": "2026-03-01T00:04:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-escalation",
+    "event_id": "escalation-5",
+    "sequence": 5,
+    "previous_event_id": "escalation-4",
+    "occurred_at": "2026-03-01T00:05:00Z",
+    "type": "auditor_counterchecked",
+    "data": {
+      "packet": {
+        "contract_version": "1.0",
+        "audit_id": "audit-escalation-1",
+        "review_ref": "review-escalation-1",
+        "decision": "disagree",
+        "findings": [
+          {
+            "code": "ordering-policy",
+            "severity": "advisory",
+            "summary": "The requested display order does not identify a tie-breaking policy",
+            "evidence_refs": ["evidence-escalation-verification"]
+          }
+        ],
+        "evidence_refs": ["evidence-escalation-verification"],
+        "completed_at": "2026-03-01T00:05:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-escalation",
+    "event_id": "escalation-6",
+    "sequence": 6,
+    "previous_event_id": "escalation-5",
+    "occurred_at": "2026-03-01T00:06:00Z",
+    "type": "owner_escalated",
+    "data": {
+      "decision": {
+        "contract_version": "1.0",
+        "decision_id": "decision-escalation-1",
+        "made_by": "owner",
+        "disposition": "escalate",
+        "rationale": "The review and audit disagree on the completeness of the ordering policy",
+        "evidence_refs": ["evidence-escalation-verification"],
+        "made_at": "2026-03-01T00:06:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-escalation",
+    "event_id": "escalation-7",
+    "sequence": 7,
+    "previous_event_id": "escalation-6",
+    "occurred_at": "2026-03-01T00:07:00Z",
+    "type": "coordinator_finalized",
+    "data": {
+      "response": {
+        "contract_version": "1.0",
+        "response_id": "response-escalation-1",
+        "outcome": "escalated",
+        "public_summary": "The independent disagreement was escalated for owner resolution",
+        "evidence_refs": ["evidence-escalation-verification"],
+        "completed_at": "2026-03-01T00:07:00Z"
+      }
+    }
+  }
+]

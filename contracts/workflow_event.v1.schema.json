@@ -1,0 +1,148 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ovca.dev/contracts/workflow_event.v1.schema.json",
+  "title": "OVCA Workflow Event v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "workflow_id", "event_id", "sequence", "occurred_at", "type", "data"],
+  "properties": {
+    "contract_version": { "const": "1.0" },
+    "workflow_id": { "type": "string", "minLength": 1 },
+    "event_id": { "type": "string", "minLength": 1 },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "previous_event_id": { "type": "string", "minLength": 1 },
+    "occurred_at": { "type": "string", "format": "date-time" },
+    "type": {
+      "enum": [
+        "intake_accepted",
+        "coordinator_dispatched",
+        "engineer_returned",
+        "verification_recorded",
+        "reviewer_decided",
+        "auditor_counterchecked",
+        "repair_directed",
+        "owner_escalated",
+        "coordinator_finalized"
+      ]
+    },
+    "data": { "type": "object" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "sequence": { "const": 0 } } },
+      "then": { "not": { "required": ["previous_event_id"] } },
+      "else": { "required": ["previous_event_id"] }
+    },
+    {
+      "if": { "properties": { "type": { "const": "intake_accepted" } } },
+      "then": { "properties": { "data": { "$ref": "#/$defs/intake" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "coordinator_dispatched" } } },
+      "then": { "properties": { "data": { "$ref": "#/$defs/invocation" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "engineer_returned" } } },
+      "then": { "properties": { "data": { "$ref": "#/$defs/result" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "verification_recorded" } } },
+      "then": { "properties": { "data": { "$ref": "#/$defs/verification" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "reviewer_decided" } } },
+      "then": { "properties": { "data": { "$ref": "#/$defs/review" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "auditor_counterchecked" } } },
+      "then": { "properties": { "data": { "$ref": "#/$defs/audit" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "repair_directed" } } },
+      "then": { "properties": { "data": { "$ref": "#/$defs/repair" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "owner_escalated" } } },
+      "then": { "properties": { "data": { "$ref": "#/$defs/escalation" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "coordinator_finalized" } } },
+      "then": { "properties": { "data": { "$ref": "#/$defs/finalization" } } }
+    }
+  ],
+  "$defs": {
+    "intake": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["request_ref", "public_summary", "authority", "budget"],
+      "properties": {
+        "request_ref": { "type": "string", "minLength": 1 },
+        "public_summary": { "type": "string", "minLength": 1 },
+        "authority": { "$ref": "authority.v1.schema.json" },
+        "budget": { "$ref": "execution_budget.v1.schema.json" }
+      }
+    },
+    "invocation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["invocation"],
+      "properties": { "invocation": { "$ref": "role_invocation.v1.schema.json" } }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["result"],
+      "properties": { "result": { "$ref": "role_result.v1.schema.json" } }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["outcome"],
+      "properties": { "outcome": { "$ref": "verification_outcome.v1.schema.json" } }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packet"],
+      "properties": { "packet": { "$ref": "review_packet.v1.schema.json" } }
+    },
+    "audit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["packet"],
+      "properties": { "packet": { "$ref": "audit_packet.v1.schema.json" } }
+    },
+    "repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["directive"],
+      "properties": { "directive": { "$ref": "repair_directive.v1.schema.json" } }
+    },
+    "escalation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["decision"],
+      "properties": { "decision": { "$ref": "decision.v1.schema.json" } }
+    },
+    "finalization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["response"],
+      "properties": {
+        "response": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["contract_version", "response_id", "outcome", "public_summary", "evidence_refs", "completed_at"],
+          "properties": {
+            "contract_version": { "const": "1.0" },
+            "response_id": { "type": "string", "minLength": 1 },
+            "outcome": { "enum": ["passed", "escalated"] },
+            "public_summary": { "type": "string", "minLength": 1 },
+            "evidence_refs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+            "completed_at": { "type": "string", "format": "date-time" }
+          }
+        }
+      }
+    }
+  }
+}

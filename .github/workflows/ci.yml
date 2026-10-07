@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  rust:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+      - name: Rust format
+        run: cargo fmt --manifest-path rust/Cargo.toml --all -- --check
+      - name: Rust check
+        run: cargo check --manifest-path rust/Cargo.toml --all-targets --locked
+      - name: Rust tests
+        run: cargo test --manifest-path rust/Cargo.toml --all-targets --locked
+      - name: Rust Clippy
+        run: cargo clippy --manifest-path rust/Cargo.toml --all-targets --locked -- -D warnings

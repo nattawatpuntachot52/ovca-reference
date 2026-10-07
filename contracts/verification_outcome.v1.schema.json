@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ovca.dev/contracts/verification_outcome.v1.schema.json",
+  "title": "OVCA Verification Outcome v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "verification_id", "subject_result_ref", "status", "checks", "evidence", "completed_at"],
+  "properties": {
+    "contract_version": { "const": "1.0" },
+    "verification_id": { "type": "string", "minLength": 1 },
+    "subject_result_ref": { "type": "string", "minLength": 1 },
+    "status": { "enum": ["passed", "failed"] },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "summary"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "status": { "enum": ["passed", "failed"] },
+          "summary": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "evidence": { "type": "array", "minItems": 1, "items": { "$ref": "evidence.v1.schema.json" } },
+    "completed_at": { "type": "string", "format": "date-time" }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ovca.dev/contracts/repair_directive.v1.schema.json",
+  "title": "OVCA Repair Directive v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "directive_id", "source_review_ref", "source_audit_ref", "attempt", "instructions", "evidence_refs", "issued_at"],
+  "properties": {
+    "contract_version": { "const": "1.0" },
+    "directive_id": { "type": "string", "minLength": 1 },
+    "source_review_ref": { "type": "string", "minLength": 1 },
+    "source_audit_ref": { "type": "string", "minLength": 1 },
+    "attempt": { "type": "integer", "minimum": 1 },
+    "instructions": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "evidence_refs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "issued_at": { "type": "string", "format": "date-time" }
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "contract_version": "1.0",
+  "max_repair_attempts": 1,
+  "max_events": 16
+}

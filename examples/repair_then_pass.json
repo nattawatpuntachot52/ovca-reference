@@ -1,0 +1,330 @@
+[
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-0",
+    "sequence": 0,
+    "occurred_at": "2026-02-01T00:00:00Z",
+    "type": "intake_accepted",
+    "data": {
+      "request_ref": "request-repair",
+      "public_summary": "Normalize a small label set",
+      "authority": {
+        "contract_version": "1.0",
+        "authority_id": "authority-repair",
+        "granted_by": "owner",
+        "objective": "Produce normalized public labels",
+        "scope": ["label normalization"],
+        "constraints": ["one repair attempt"]
+      },
+      "budget": {
+        "contract_version": "1.0",
+        "max_repair_attempts": 1,
+        "max_events": 16
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-1",
+    "sequence": 1,
+    "previous_event_id": "repair-0",
+    "occurred_at": "2026-02-01T00:01:00Z",
+    "type": "coordinator_dispatched",
+    "data": {
+      "invocation": {
+        "contract_version": "1.0",
+        "invocation_id": "invocation-repair-1",
+        "requested_by": "coordinator",
+        "role": "engineer",
+        "objective": "Normalize the label set",
+        "authority_ref": "authority-repair",
+        "input_refs": ["request-repair"],
+        "attempt": 1,
+        "requested_at": "2026-02-01T00:01:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-2",
+    "sequence": 2,
+    "previous_event_id": "repair-1",
+    "occurred_at": "2026-02-01T00:02:00Z",
+    "type": "engineer_returned",
+    "data": {
+      "result": {
+        "contract_version": "1.0",
+        "result_id": "result-repair-1",
+        "invocation_ref": "invocation-repair-1",
+        "role": "engineer",
+        "status": "succeeded",
+        "summary": "Produced the first normalized label set",
+        "evidence": [
+          {
+            "contract_version": "1.0",
+            "evidence_id": "evidence-repair-implementation-1",
+            "kind": "implementation",
+            "summary": "First reference result was produced",
+            "source": "engineer-result",
+            "collected_at": "2026-02-01T00:02:00Z"
+          }
+        ],
+        "completed_at": "2026-02-01T00:02:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-3",
+    "sequence": 3,
+    "previous_event_id": "repair-2",
+    "occurred_at": "2026-02-01T00:03:00Z",
+    "type": "verification_recorded",
+    "data": {
+      "outcome": {
+        "contract_version": "1.0",
+        "verification_id": "verification-repair-1",
+        "subject_result_ref": "result-repair-1",
+        "status": "failed",
+        "checks": [
+          {
+            "name": "lowercase-labels",
+            "status": "failed",
+            "summary": "One label retained uppercase characters"
+          }
+        ],
+        "evidence": [
+          {
+            "contract_version": "1.0",
+            "evidence_id": "evidence-repair-failure",
+            "kind": "verification",
+            "summary": "The lowercase label check failed",
+            "source": "reference-checks",
+            "collected_at": "2026-02-01T00:03:00Z"
+          }
+        ],
+        "completed_at": "2026-02-01T00:03:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-4",
+    "sequence": 4,
+    "previous_event_id": "repair-3",
+    "occurred_at": "2026-02-01T00:04:00Z",
+    "type": "reviewer_decided",
+    "data": {
+      "packet": {
+        "contract_version": "1.0",
+        "review_id": "review-repair-1",
+        "engineer_result_ref": "result-repair-1",
+        "verification_ref": "verification-repair-1",
+        "decision": "repair",
+        "findings": [
+          {
+            "code": "label-case",
+            "severity": "blocking",
+            "summary": "Normalize the remaining uppercase label",
+            "evidence_refs": ["evidence-repair-failure"]
+          }
+        ],
+        "evidence_refs": ["evidence-repair-failure"],
+        "completed_at": "2026-02-01T00:04:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-5",
+    "sequence": 5,
+    "previous_event_id": "repair-4",
+    "occurred_at": "2026-02-01T00:05:00Z",
+    "type": "auditor_counterchecked",
+    "data": {
+      "packet": {
+        "contract_version": "1.0",
+        "audit_id": "audit-repair-1",
+        "review_ref": "review-repair-1",
+        "decision": "concur",
+        "findings": [],
+        "evidence_refs": ["evidence-repair-failure"],
+        "completed_at": "2026-02-01T00:05:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-6",
+    "sequence": 6,
+    "previous_event_id": "repair-5",
+    "occurred_at": "2026-02-01T00:06:00Z",
+    "type": "repair_directed",
+    "data": {
+      "directive": {
+        "contract_version": "1.0",
+        "directive_id": "directive-repair-1",
+        "source_review_ref": "review-repair-1",
+        "source_audit_ref": "audit-repair-1",
+        "attempt": 1,
+        "instructions": ["Normalize the remaining uppercase label"],
+        "evidence_refs": ["evidence-repair-failure"],
+        "issued_at": "2026-02-01T00:06:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-7",
+    "sequence": 7,
+    "previous_event_id": "repair-6",
+    "occurred_at": "2026-02-01T00:07:00Z",
+    "type": "coordinator_dispatched",
+    "data": {
+      "invocation": {
+        "contract_version": "1.0",
+        "invocation_id": "invocation-repair-2",
+        "requested_by": "coordinator",
+        "role": "engineer",
+        "objective": "Apply the bounded label repair",
+        "authority_ref": "authority-repair",
+        "input_refs": ["directive-repair-1"],
+        "attempt": 2,
+        "requested_at": "2026-02-01T00:07:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-8",
+    "sequence": 8,
+    "previous_event_id": "repair-7",
+    "occurred_at": "2026-02-01T00:08:00Z",
+    "type": "engineer_returned",
+    "data": {
+      "result": {
+        "contract_version": "1.0",
+        "result_id": "result-repair-2",
+        "invocation_ref": "invocation-repair-2",
+        "role": "engineer",
+        "status": "succeeded",
+        "summary": "Produced the repaired normalized label set",
+        "evidence": [
+          {
+            "contract_version": "1.0",
+            "evidence_id": "evidence-repair-implementation-2",
+            "kind": "implementation",
+            "summary": "Bounded repair result was produced",
+            "source": "engineer-result",
+            "collected_at": "2026-02-01T00:08:00Z"
+          }
+        ],
+        "completed_at": "2026-02-01T00:08:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-9",
+    "sequence": 9,
+    "previous_event_id": "repair-8",
+    "occurred_at": "2026-02-01T00:09:00Z",
+    "type": "verification_recorded",
+    "data": {
+      "outcome": {
+        "contract_version": "1.0",
+        "verification_id": "verification-repair-2",
+        "subject_result_ref": "result-repair-2",
+        "status": "passed",
+        "checks": [
+          {
+            "name": "lowercase-labels",
+            "status": "passed",
+            "summary": "Every label is lowercase"
+          }
+        ],
+        "evidence": [
+          {
+            "contract_version": "1.0",
+            "evidence_id": "evidence-repair-pass",
+            "kind": "verification",
+            "summary": "The repaired label set passed",
+            "source": "reference-checks",
+            "collected_at": "2026-02-01T00:09:00Z"
+          }
+        ],
+        "completed_at": "2026-02-01T00:09:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-10",
+    "sequence": 10,
+    "previous_event_id": "repair-9",
+    "occurred_at": "2026-02-01T00:10:00Z",
+    "type": "reviewer_decided",
+    "data": {
+      "packet": {
+        "contract_version": "1.0",
+        "review_id": "review-repair-2",
+        "engineer_result_ref": "result-repair-2",
+        "verification_ref": "verification-repair-2",
+        "decision": "pass",
+        "findings": [],
+        "evidence_refs": ["evidence-repair-pass"],
+        "completed_at": "2026-02-01T00:10:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-11",
+    "sequence": 11,
+    "previous_event_id": "repair-10",
+    "occurred_at": "2026-02-01T00:11:00Z",
+    "type": "auditor_counterchecked",
+    "data": {
+      "packet": {
+        "contract_version": "1.0",
+        "audit_id": "audit-repair-2",
+        "review_ref": "review-repair-2",
+        "decision": "concur",
+        "findings": [],
+        "evidence_refs": ["evidence-repair-pass"],
+        "completed_at": "2026-02-01T00:11:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-repair",
+    "event_id": "repair-12",
+    "sequence": 12,
+    "previous_event_id": "repair-11",
+    "occurred_at": "2026-02-01T00:12:00Z",
+    "type": "coordinator_finalized",
+    "data": {
+      "response": {
+        "contract_version": "1.0",
+        "response_id": "response-repair-1",
+        "outcome": "passed",
+        "public_summary": "The bounded repair passed verification, review, and audit",
+        "evidence_refs": ["evidence-repair-pass"],
+        "completed_at": "2026-02-01T00:12:00Z"
+      }
+    }
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ovca.dev/contracts/role_invocation.v1.schema.json",
+  "title": "OVCA Role Invocation v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "invocation_id", "requested_by", "role", "objective", "authority_ref", "input_refs", "attempt", "requested_at"],
+  "properties": {
+    "contract_version": { "const": "1.0" },
+    "invocation_id": { "type": "string", "minLength": 1 },
+    "requested_by": { "enum": ["owner", "coordinator", "engineer", "reviewer", "auditor"] },
+    "role": { "enum": ["owner", "coordinator", "engineer", "reviewer", "auditor"] },
+    "objective": { "type": "string", "minLength": 1 },
+    "authority_ref": { "type": "string", "minLength": 1 },
+    "input_refs": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "attempt": { "type": "integer", "minimum": 1 },
+    "requested_at": { "type": "string", "format": "date-time" }
+  }
+}

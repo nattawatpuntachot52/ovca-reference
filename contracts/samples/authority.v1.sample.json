@@ -1,0 +1,8 @@
+{
+  "contract_version": "1.0",
+  "authority_id": "authority-example-1",
+  "granted_by": "owner",
+  "objective": "Produce a deterministic public reference result",
+  "scope": ["reference workflow"],
+  "constraints": ["use caller-supplied events"]
+}

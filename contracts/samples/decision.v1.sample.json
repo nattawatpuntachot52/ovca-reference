@@ -1,0 +1,9 @@
+{
+  "contract_version": "1.0",
+  "decision_id": "decision-example-1",
+  "made_by": "owner",
+  "disposition": "escalate",
+  "rationale": "The independent countercheck disagreed with the review",
+  "evidence_refs": ["evidence-example-1"],
+  "made_at": "2026-01-01T00:07:00Z"
+}

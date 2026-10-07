@@ -1,0 +1,11 @@
+{
+  "contract_version": "1.0",
+  "invocation_id": "invocation-example-1",
+  "requested_by": "coordinator",
+  "role": "engineer",
+  "objective": "Produce the bounded reference result",
+  "authority_ref": "authority-example-1",
+  "input_refs": ["request-example-1"],
+  "attempt": 1,
+  "requested_at": "2026-01-01T00:01:00Z"
+}

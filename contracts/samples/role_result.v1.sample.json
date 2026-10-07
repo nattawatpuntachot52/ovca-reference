@@ -1,0 +1,19 @@
+{
+  "contract_version": "1.0",
+  "result_id": "result-example-1",
+  "invocation_ref": "invocation-example-1",
+  "role": "engineer",
+  "status": "succeeded",
+  "summary": "Produced the bounded reference result",
+  "evidence": [
+    {
+      "contract_version": "1.0",
+      "evidence_id": "evidence-implementation-1",
+      "kind": "implementation",
+      "summary": "Reference result is available",
+      "source": "engineer-result",
+      "collected_at": "2026-01-01T00:02:00Z"
+    }
+  ],
+  "completed_at": "2026-01-01T00:02:00Z"
+}

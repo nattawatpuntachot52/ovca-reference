@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ovca.dev/contracts/audit_packet.v1.schema.json",
+  "title": "OVCA Audit Packet v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "audit_id", "review_ref", "decision", "findings", "evidence_refs", "completed_at"],
+  "properties": {
+    "contract_version": { "const": "1.0" },
+    "audit_id": { "type": "string", "minLength": 1 },
+    "review_ref": { "type": "string", "minLength": 1 },
+    "decision": { "enum": ["concur", "disagree"] },
+    "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+    "evidence_refs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "completed_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "severity", "summary", "evidence_refs"],
+      "properties": {
+        "code": { "type": "string", "minLength": 1 },
+        "severity": { "enum": ["advisory", "blocking"] },
+        "summary": { "type": "string", "minLength": 1 },
+        "evidence_refs": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ovca.dev/contracts/execution_budget.v1.schema.json",
+  "title": "OVCA Execution Budget v1",
+  "$comment": "Rust semantic validation requires max_events >= 8 + (6 * max_repair_attempts) so every bounded repair can still reach owner escalation and final response.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "max_repair_attempts", "max_events"],
+  "properties": {
+    "contract_version": { "const": "1.0" },
+    "max_repair_attempts": { "type": "integer", "minimum": 0 },
+    "max_events": { "type": "integer", "minimum": 1 }
+  }
+}

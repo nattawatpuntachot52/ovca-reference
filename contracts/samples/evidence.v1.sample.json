@@ -1,0 +1,8 @@
+{
+  "contract_version": "1.0",
+  "evidence_id": "evidence-example-1",
+  "kind": "verification",
+  "summary": "All declared checks passed",
+  "source": "reference-checks",
+  "collected_at": "2026-01-01T00:03:00Z"
+}

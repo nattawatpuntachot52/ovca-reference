@@ -1,0 +1,174 @@
+[
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-pass",
+    "event_id": "pass-0",
+    "sequence": 0,
+    "occurred_at": "2026-01-01T00:00:00Z",
+    "type": "intake_accepted",
+    "data": {
+      "request_ref": "request-pass",
+      "public_summary": "Create a deterministic greeting formatter",
+      "authority": {
+        "contract_version": "1.0",
+        "authority_id": "authority-pass",
+        "granted_by": "owner",
+        "objective": "Produce a greeting formatter reference result",
+        "scope": ["greeting formatter"],
+        "constraints": ["return a deterministic result"]
+      },
+      "budget": {
+        "contract_version": "1.0",
+        "max_repair_attempts": 1,
+        "max_events": 16
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-pass",
+    "event_id": "pass-1",
+    "sequence": 1,
+    "previous_event_id": "pass-0",
+    "occurred_at": "2026-01-01T00:01:00Z",
+    "type": "coordinator_dispatched",
+    "data": {
+      "invocation": {
+        "contract_version": "1.0",
+        "invocation_id": "invocation-pass-1",
+        "requested_by": "coordinator",
+        "role": "engineer",
+        "objective": "Produce the greeting formatter result",
+        "authority_ref": "authority-pass",
+        "input_refs": ["request-pass"],
+        "attempt": 1,
+        "requested_at": "2026-01-01T00:01:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-pass",
+    "event_id": "pass-2",
+    "sequence": 2,
+    "previous_event_id": "pass-1",
+    "occurred_at": "2026-01-01T00:02:00Z",
+    "type": "engineer_returned",
+    "data": {
+      "result": {
+        "contract_version": "1.0",
+        "result_id": "result-pass-1",
+        "invocation_ref": "invocation-pass-1",
+        "role": "engineer",
+        "status": "succeeded",
+        "summary": "Produced a stable greeting formatter result",
+        "evidence": [
+          {
+            "contract_version": "1.0",
+            "evidence_id": "evidence-pass-implementation",
+            "kind": "implementation",
+            "summary": "Reference output was produced",
+            "source": "engineer-result",
+            "collected_at": "2026-01-01T00:02:00Z"
+          }
+        ],
+        "completed_at": "2026-01-01T00:02:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-pass",
+    "event_id": "pass-3",
+    "sequence": 3,
+    "previous_event_id": "pass-2",
+    "occurred_at": "2026-01-01T00:03:00Z",
+    "type": "verification_recorded",
+    "data": {
+      "outcome": {
+        "contract_version": "1.0",
+        "verification_id": "verification-pass-1",
+        "subject_result_ref": "result-pass-1",
+        "status": "passed",
+        "checks": [
+          {
+            "name": "stable-output",
+            "status": "passed",
+            "summary": "Repeated inputs produced the same greeting"
+          }
+        ],
+        "evidence": [
+          {
+            "contract_version": "1.0",
+            "evidence_id": "evidence-pass-verification",
+            "kind": "verification",
+            "summary": "The deterministic output check passed",
+            "source": "reference-checks",
+            "collected_at": "2026-01-01T00:03:00Z"
+          }
+        ],
+        "completed_at": "2026-01-01T00:03:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-pass",
+    "event_id": "pass-4",
+    "sequence": 4,
+    "previous_event_id": "pass-3",
+    "occurred_at": "2026-01-01T00:04:00Z",
+    "type": "reviewer_decided",
+    "data": {
+      "packet": {
+        "contract_version": "1.0",
+        "review_id": "review-pass-1",
+        "engineer_result_ref": "result-pass-1",
+        "verification_ref": "verification-pass-1",
+        "decision": "pass",
+        "findings": [],
+        "evidence_refs": ["evidence-pass-verification"],
+        "completed_at": "2026-01-01T00:04:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-pass",
+    "event_id": "pass-5",
+    "sequence": 5,
+    "previous_event_id": "pass-4",
+    "occurred_at": "2026-01-01T00:05:00Z",
+    "type": "auditor_counterchecked",
+    "data": {
+      "packet": {
+        "contract_version": "1.0",
+        "audit_id": "audit-pass-1",
+        "review_ref": "review-pass-1",
+        "decision": "concur",
+        "findings": [],
+        "evidence_refs": ["evidence-pass-verification"],
+        "completed_at": "2026-01-01T00:05:00Z"
+      }
+    }
+  },
+  {
+    "contract_version": "1.0",
+    "workflow_id": "workflow-pass",
+    "event_id": "pass-6",
+    "sequence": 6,
+    "previous_event_id": "pass-5",
+    "occurred_at": "2026-01-01T00:06:00Z",
+    "type": "coordinator_finalized",
+    "data": {
+      "response": {
+        "contract_version": "1.0",
+        "response_id": "response-pass-1",
+        "outcome": "passed",
+        "public_summary": "The reference result passed verification, review, and audit",
+        "evidence_refs": ["evidence-pass-verification"],
+        "completed_at": "2026-01-01T00:06:00Z"
+      }
+    }
+  }
+]

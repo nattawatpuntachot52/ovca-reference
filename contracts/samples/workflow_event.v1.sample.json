@@ -1,0 +1,25 @@
+{
+  "contract_version": "1.0",
+  "workflow_id": "workflow-example-1",
+  "event_id": "event-example-0",
+  "sequence": 0,
+  "occurred_at": "2026-01-01T00:00:00Z",
+  "type": "intake_accepted",
+  "data": {
+    "request_ref": "request-example-1",
+    "public_summary": "Create a deterministic reference result",
+    "authority": {
+      "contract_version": "1.0",
+      "authority_id": "authority-example-1",
+      "granted_by": "owner",
+      "objective": "Produce a deterministic public reference result",
+      "scope": ["reference workflow"],
+      "constraints": ["use caller-supplied events"]
+    },
+    "budget": {
+      "contract_version": "1.0",
+      "max_repair_attempts": 1,
+      "max_events": 16
+    }
+  }
+}

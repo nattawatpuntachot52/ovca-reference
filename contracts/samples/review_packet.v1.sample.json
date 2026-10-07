@@ -1,0 +1,10 @@
+{
+  "contract_version": "1.0",
+  "review_id": "review-example-1",
+  "engineer_result_ref": "result-example-1",
+  "verification_ref": "verification-example-1",
+  "decision": "pass",
+  "findings": [],
+  "evidence_refs": ["evidence-verification-1"],
+  "completed_at": "2026-01-01T00:04:00Z"
+}
