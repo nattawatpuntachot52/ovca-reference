@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ovca.dev/contracts/admission_decision.v1.schema.json",
+  "title": "OVCA AdmissionDecisionRecord v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "decision_id",
+    "trigger_id",
+    "thread_id",
+    "decision",
+    "accept_mode",
+    "policy_version",
+    "would_accept",
+    "matched_rules",
+    "proposed_writable_scope",
+    "error_kind",
+    "reason",
+    "recorded_at"
+  ],
+  "properties": {
+    "contract_version": { "const": "1.0" },
+    "decision_id": { "type": "string", "minLength": 1 },
+    "trigger_id": { "type": "string", "minLength": 1 },
+    "thread_id": { "type": "string", "minLength": 1 },
+    "decision": { "enum": ["accept", "stop", "ignore", "unavailable"] },
+    "accept_mode": { "enum": ["off", "observe", "auto"] },
+    "policy_version": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "would_accept": { "type": "boolean" },
+    "matched_rules": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "proposed_writable_scope": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "error_kind": {
+      "type": ["string", "null"],
+      "minLength": 1
+    },
+    "reason": { "type": "string", "minLength": 1 },
+    "recorded_at": { "type": "string", "minLength": 1 }
+  }
+}
