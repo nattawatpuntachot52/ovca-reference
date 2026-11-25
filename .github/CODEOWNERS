@@ -1,0 +1,13 @@
+# Code Owners for OVCA Public Reference
+# Routes changes touching contracts, deterministic crates, skills, workflows,
+# and architectural/operational records to the accountable maintainer.
+
+/CONTRIBUTING.md @nattawatpuntachot52
+/SECURITY.md @nattawatpuntachot52
+/.github/ @nattawatpuntachot52
+/contracts/ @nattawatpuntachot52
+/examples/ @nattawatpuntachot52
+/rust/ @nattawatpuntachot52
+/skills/ @nattawatpuntachot52
+/docs/adr/ @nattawatpuntachot52
+/docs/operations/ @nattawatpuntachot52

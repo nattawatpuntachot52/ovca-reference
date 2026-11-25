@@ -12,6 +12,11 @@ stream. Its security properties stop at that boundary.
   cross-record references, known evidence references, repair limits, and final
   outcome consistency.
 - WorkflowReducer::apply leaves the prior value unchanged when an event fails.
+- ovca-admission computes deterministic canonical policy digests, enforces
+  segment-safe repository-relative scope containment against Authority.scope,
+  prevents bot or CI triggers from holding explicit mandates, returns
+  HandbackRecord on out-of-scope follow-ups, and separates `unavailable`
+  evaluator failures from `ignore` decisions.
 
 These checks protect the internal consistency of caller-supplied values. They do
 not prove that a caller, actor, timestamp, source, or evidence statement is
@@ -37,8 +42,8 @@ text, evidence records, or FinalResponse.
 
 ## Capability boundary
 
-Neither crate receives filesystem, network, clock, credential, persistence, or
-role-execution capabilities. The reducer does not run
+None of the workspace crates receives filesystem, network, clock, credential,
+persistence, or role-execution capabilities. The reducer does not run
 verification checks, invoke any role, or write an event log. An integrating
 application must define and review those boundaries separately.
 

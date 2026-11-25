@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ovca.dev/contracts/admission_policy.v1.schema.json",
+  "title": "OVCA AdmissionPolicy v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contract_version",
+    "accept_mode",
+    "allowed_actors",
+    "bot_allowlist",
+    "automated_reviewers_non_bot",
+    "admission_table",
+    "proactive_rules"
+  ],
+  "properties": {
+    "contract_version": { "const": "1.0" },
+    "accept_mode": { "enum": ["off", "observe", "auto"] },
+    "allowed_actors": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "bot_allowlist": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "automated_reviewers_non_bot": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "admission_table": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": false,
+      "properties": {
+        "owner_cli": { "$ref": "#/$defs/admission_row" },
+        "github_issue": { "$ref": "#/$defs/admission_row" },
+        "github_pr": { "$ref": "#/$defs/admission_row" },
+        "github_comment": { "$ref": "#/$defs/admission_row" },
+        "github_default_branch_ci": { "$ref": "#/$defs/admission_row" }
+      }
+    },
+    "proactive_rules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/proactive_rule" }
+    }
+  },
+  "$defs": {
+    "admission_row": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "receive_all",
+        "listed_addressed",
+        "listed_unaddressed",
+        "unlisted_addressed",
+        "unlisted_unaddressed"
+      ],
+      "properties": {
+        "receive_all": { "type": "boolean" },
+        "listed_addressed": { "enum": ["explicit", "inferred", "ignore"] },
+        "listed_unaddressed": { "enum": ["inferred", "ignore"] },
+        "unlisted_addressed": { "enum": ["explicit", "inferred", "ignore"] },
+        "unlisted_unaddressed": { "enum": ["inferred", "ignore"] }
+      }
+    },
+    "proactive_rule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule_id",
+        "enabled",
+        "title",
+        "description",
+        "receiving_scopes",
+        "writable_scope",
+        "silent_ack"
+      ],
+      "properties": {
+        "rule_id": { "type": "string", "minLength": 1 },
+        "enabled": { "type": "boolean" },
+        "title": { "type": "string", "minLength": 1 },
+        "description": { "type": "string", "minLength": 1 },
+        "receiving_scopes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "owner_cli",
+              "github_issue",
+              "github_pr",
+              "github_comment",
+              "github_default_branch_ci"
+            ]
+          }
+        },
+        "writable_scope": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "silent_ack": { "type": "boolean" }
+      }
+    }
+  }
+}

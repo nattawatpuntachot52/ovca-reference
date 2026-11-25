@@ -1,0 +1,16 @@
+{
+  "contract_version": "1.0",
+  "mandate_id": "mandate-example-1",
+  "authority_id": "authority-example-1",
+  "origin_thread_id": "thread-pr-1",
+  "source_kind": "github_pr",
+  "receiving_scope": "github_pr",
+  "requester_actor": "maintainer-example",
+  "requester_is_bot": false,
+  "strength": "explicit",
+  "policy_version": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "matched_rules": [],
+  "writable_scope": ["rust/ovca-admission", "contracts"],
+  "status": "active",
+  "issued_at": "2026-01-15T12:00:00Z"
+}

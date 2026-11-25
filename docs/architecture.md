@@ -1,8 +1,8 @@
 # Architecture
 
-OVCA is a two-crate Rust workspace with a file-based contract surface and
-synthetic examples. The design separates data compatibility from workflow
-reduction.
+OVCA is a three-crate Rust workspace with a file-based contract surface and
+synthetic examples. The design separates pre-intake admission, data
+compatibility, and workflow reduction.
 
 ## Components
 
@@ -10,6 +10,7 @@ reduction.
 |---|---|
 | ovca-types | Defines version 1.0 role, authority, evidence, decision, invocation, result, verification, review, audit, repair, budget, response, and event types |
 | ovca-workflow | Applies caller-supplied WorkflowEvent values to a deterministic state machine |
+| ovca-admission | Evaluates pre-intake AdmissionPolicy rules, canonical SHA-256 policy versions, Authority-bound AuthorizationMandate records, follow-up handback, and observe-mode calibration |
 | contracts | Publishes closed Draft 2020-12 structural schemas and matching samples |
 | examples | Supplies complete event streams for three synthetic scenarios |
 
@@ -62,20 +63,39 @@ order. Its result depends only on the supplied values and crate code. The
 library performs no persistence, role execution, verification execution, or
 external calls.
 
+## Admission layer
+
+ovca-admission operates prior to IntakeAccepted without changing any ovca-types
+or ovca-workflow v1.0 wire contracts:
+
+- AdmissionPolicy defines disjoint human, bot, and non-bot automated reviewer
+  lists, per-surface admission rules, and canonical `sha256:<64 hex>` policy
+  digests.
+- AuthorizationMandate binds pre-intake execution to an Authority identifier
+  and a segment-safe repository-relative `writable_scope` subset.
+- revalidate_mandate and evaluate_followup enforce `Context != Authority`:
+  context-only subscriptions, bots, and CI events grant no authority, and
+  out-of-scope human follow-ups emit a structured HandbackRecord rather than
+  mutating the mandate.
+- evaluate_proactive_admission supports `off | observe | auto`, recording
+  `would_accept` without issuing a mandate in `observe` mode and keeping
+  `unavailable` distinct from `ignore`.
+
 ## Dependency direction
 
 ~~~text
-contracts and examples
-        |
-        v
-    ovca-types
-        |
-        v
-   ovca-workflow
+      contracts and examples
+                |
+                v
+           ovca-types
+          /          \
+         v            v
+  ovca-admission   ovca-workflow
 ~~~
 
-ovca-types has no dependency on ovca-workflow. The reducer consumes the public
-contracts and never changes their wire format.
+ovca-types has no dependency on ovca-admission or ovca-workflow. Both
+downstream crates consume the version 1.0 contracts without altering their wire
+format.
 
 The exact event transitions are documented in [System workflows](system-workflows.md).
 Trust assumptions are documented in [Security boundary](security-boundary.md),

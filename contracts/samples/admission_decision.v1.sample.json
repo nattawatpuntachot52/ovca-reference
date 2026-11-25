@@ -1,0 +1,15 @@
+{
+  "contract_version": "1.0",
+  "decision_id": "admission-decision-example-1",
+  "trigger_id": "trigger-ci-example-1",
+  "thread_id": "thread-ci-main-1",
+  "decision": "ignore",
+  "accept_mode": "observe",
+  "policy_version": "sha256:0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+  "would_accept": true,
+  "matched_rules": ["default-branch-ci-regression"],
+  "proposed_writable_scope": ["contracts", "rust"],
+  "error_kind": null,
+  "reason": "observe mode recorded would_accept without issuing a mandate",
+  "recorded_at": "2026-01-15T12:05:00Z"
+}

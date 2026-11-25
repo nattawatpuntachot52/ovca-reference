@@ -47,10 +47,12 @@ reference rules.
 |---|---|
 | rust/ovca-types | Version 1.0 Rust contracts and semantic validation |
 | rust/ovca-workflow | Deterministic WorkflowReducer and recover_public helper |
+| rust/ovca-admission | Pre-intake admission policy, immutable mandates, follow-up handback, and observe-mode evaluation |
 | contracts | Draft 2020-12 JSON Schema documents and synthetic samples |
 | examples | Complete pass, repair-then-pass, and disagreement event streams |
-| docs | Architecture, trust boundary, limitations, and design decisions |
+| docs | Architecture, trust boundary, limitations, operational inventory, and design decisions |
 | skills/zoom-out | Installable Codex skill for evidence-grounded system maps |
+| .github | CI workflow, CODEOWNERS, bounded task brief, and pull-request AGENT_ACK template |
 
 ## Codex skill
 

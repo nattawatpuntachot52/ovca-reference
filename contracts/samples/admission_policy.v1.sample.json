@@ -1,0 +1,41 @@
+{
+  "contract_version": "1.0",
+  "accept_mode": "observe",
+  "allowed_actors": ["maintainer-example"],
+  "bot_allowlist": ["ci-audit-example[bot]"],
+  "automated_reviewers_non_bot": [],
+  "admission_table": {
+    "owner_cli": {
+      "receive_all": true,
+      "listed_addressed": "explicit",
+      "listed_unaddressed": "ignore",
+      "unlisted_addressed": "ignore",
+      "unlisted_unaddressed": "ignore"
+    },
+    "github_pr": {
+      "receive_all": true,
+      "listed_addressed": "explicit",
+      "listed_unaddressed": "inferred",
+      "unlisted_addressed": "ignore",
+      "unlisted_unaddressed": "ignore"
+    },
+    "github_default_branch_ci": {
+      "receive_all": true,
+      "listed_addressed": "ignore",
+      "listed_unaddressed": "ignore",
+      "unlisted_addressed": "ignore",
+      "unlisted_unaddressed": "inferred"
+    }
+  },
+  "proactive_rules": [
+    {
+      "rule_id": "default-branch-ci-regression",
+      "enabled": true,
+      "title": "Default-branch CI regression triage",
+      "description": "Evaluate default-branch CI failures and record bounded repair candidates.",
+      "receiving_scopes": ["github_default_branch_ci"],
+      "writable_scope": ["rust", "contracts"],
+      "silent_ack": true
+    }
+  ]
+}

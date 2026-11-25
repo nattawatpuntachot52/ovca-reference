@@ -6,8 +6,9 @@
   verification work. Events are supplied by the caller.
 - Role enum values and event variants express responsibility but do not
   authenticate people or prove actor independence.
-- Authority is declarative. Validation does not perform admission or establish
-  that the asserted Owner granted it.
+- Authority in ovca-types is declarative; ovca-admission evaluates
+  caller-supplied policies, triggers, and mandates deterministically, but
+  neither crate authenticates transport-level actor identity on its own.
 - Evidence validation checks metadata and references only. It does not inspect
   evidence content, calculate content digests, or establish truth.
 - Timestamp validation requires nonempty caller-supplied text containing T and
